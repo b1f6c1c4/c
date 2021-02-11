@@ -1,8 +1,23 @@
 const monday = require('./api/monday');
 
 const func = async () => {
-  const r = await monday.find('quantity', 'Rare', { genre: 1 });
-  console.log(r);
+  // const rr = await monday.find('tier', 'Third');
+  // console.log(rr);
+  // const r = rr[0];
+  // r.quantity = 'Empty';
+  // r.genre = 'Main';
+  // r.tier = 'Second';
+  // r.key = 'fuck';
+  // console.log(r);
+  await monday.save([{
+    name: 'testtt1',
+    quantity: 'Rare',
+    tier: 'First',
+  }, {
+    name: 'testtt2',
+    quantity: 'Rare',
+    tier: 'First',
+  }]);
 }
 
 func();
