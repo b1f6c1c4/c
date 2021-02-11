@@ -1,0 +1,24 @@
+{
+  "name": "c",
+  "version": "0.0.0",
+  "description": "c for cook",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b1f6c1c4/c.git"
+  },
+  "author": "b1f6c1c4 <b1f6c1c4@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/b1f6c1c4/c/issues"
+  },
+  "homepage": "https://github.com/b1f6c1c4/c#readme",
+  "dependencies": {
+    "got": "^11.8.1",
+    "json5": "^2.2.0"
+  }
+}

@@ -30,7 +30,7 @@ Plan:
     - dockerized
     - Upon `POST /updateKeys`:
         1. Iterate through ingredients on monday.com
-        1. If `Key` missing and `Genre !== 'Disabled'`, translate `Name` into `Key`
+        1. If `!Key && Genre === 'Unknown'`, translate `Name` into `Key`
         1. Report changes
     - Upon `POST /classifyGenres?n=<n>`:
         1. Iterate through `<n>` `Key && Genre === 'Unknown'` ingredients on monday.com
