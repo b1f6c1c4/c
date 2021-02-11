@@ -1,8 +1,6 @@
 const got = require('got');
-const fs = require('fs');
-const JSON5 = require('json5');
+const config = require('../config').monday;
 
-const config = JSON5.parse(fs.readFileSync('secret.json5', 'utf-8')).monday;
 const api = got.extend({
   method: 'POST',
   url: 'https://api.monday.com/v2',

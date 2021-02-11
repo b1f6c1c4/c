@@ -1,23 +1,7 @@
-const monday = require('./api/monday');
+const translate = require('./api/translate');
 
 const func = async () => {
-  // const rr = await monday.find('tier', 'Third');
-  // console.log(rr);
-  // const r = rr[0];
-  // r.quantity = 'Empty';
-  // r.genre = 'Main';
-  // r.tier = 'Second';
-  // r.key = 'fuck';
-  // console.log(r);
-  await monday.save([{
-    name: 'testtt1',
-    quantity: 'Rare',
-    tier: 'First',
-  }, {
-    name: 'testtt2',
-    quantity: 'Rare',
-    tier: 'First',
-  }]);
+  console.log(await translate.zh2en('芹菜'));
 }
 
 func();
