@@ -5,6 +5,7 @@ html
     style
         | h2 { margin-top: 0px; text-decoration: underline; }
         | h2.trans { font-size: 18px; }
+        | a { color: black; }
         | .trans { margin-top: -15px; }
         | .item { display: flex; }
         | .item-img { width: 110px; margin-right: 20px; }
@@ -20,13 +21,18 @@ html
         each item in recipes
             div.item
                 div.item-img
+                    p
+                        - var i = 0;
+                        while i++ < item.w / 200
+                            span ★
                     details
                         summary Picture
-                        a(href=item.href)
-                            img(src=item.thumbnail)
+                        img(src=item.thumbnail)
                 div
-                    h2= item.title.o
-                    h2.trans= item.title.t
+                    h2
+                        a(href=item.href)= item.title.o
+                    h2.trans
+                        a(href=item.href)= item.title.t
                     p
                         each ingredient in item.ingredients
                             span(class=ingredient.className)= ingredient.o

@@ -42,7 +42,15 @@ const postProcess = (arr) => arr.map((tmp) => {
   return result;
 });
 
-const fullFields = { quantity: 1, genre: 1, tier: 1, key: 1 };
+const fullFields = {
+  key: 1,
+  category: 1,
+  location: 1,
+  expire: 1,
+  quantity: 1,
+  genre: 1,
+  tier: 1,
+};
 
 module.exports = {
   find: async (column, value, fields = fullFields, limit = 0) => {
