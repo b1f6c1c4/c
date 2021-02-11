@@ -45,9 +45,9 @@ const postProcess = (arr) => arr.map((tmp) => {
 const fullFields = { quantity: 1, genre: 1, tier: 1, key: 1 };
 
 module.exports = {
-  find: async (column, value, fields = fullFields) => {
+  find: async (column, value, fields = fullFields, limit = 0) => {
     const data = await run(`query find($bId: Int!, $cId: String!, $value: String!, $cIds: [String]) {
-      items_by_column_values(board_id: $bId, column_id: $cId, column_value: $value) {
+      items_by_column_values(board_id: $bId, column_id: $cId, column_value: $value${limit ? ', limit: ' + limit : ''}) {
         id
         name
         column_values(ids: $cIds) { id text }
@@ -55,10 +55,10 @@ module.exports = {
     }`, { cId: config.cIds[column], value, ...preProcess(fields) });
     return postProcess(data.items_by_column_values);
   },
-  findAll: async (fields = fullFields) => {
+  findAll: async (fields = fullFields, limit = 0) => {
     const data = await run(`query findAll($bId: [Int], $cIds: [String]) {
       boards(ids: $bId) {
-        items {
+        items${limit ? '(limit: ' + limit + ')' : ''} {
           id
           name
           column_values(ids: $cIds) { id text }

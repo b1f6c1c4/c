@@ -1,0 +1,37 @@
+doctype html
+html
+    head
+        title c for cook
+    style
+        | h2 { margin-top: 0px; text-decoration: underline; }
+        | h2.trans { font-size: 18px; }
+        | .trans { margin-top: -15px; }
+        | .item { display: flex; }
+        | .item-img { width: 110px; margin-right: 20px; }
+        | .sep { color: #aaa; }
+        | .tier-first { color: #fe158a; }
+        | .tier-second { color: #ff7575; }
+        | .tier-third { color: #fdab3d; }
+        | .tier-fourth { color: #cbb641; }
+        | .tier-fifth { color: #7f5348; }
+        | .unknown { color: #0ff; text-decoration: underline; }
+    body
+        h1 c for cook - by b1f6c1c4
+        each item in recipes
+            div.item
+                div.item-img
+                    details
+                        summary Picture
+                        a(href=item.href)
+                            img(src=item.thumbnail)
+                div
+                    h2= item.title.o
+                    h2.trans= item.title.t
+                    p
+                        each ingredient in item.ingredients
+                            span(class=ingredient.className)= ingredient.o
+                            span.sep= ', '
+                    p.trans
+                        each ingredient in item.ingredients
+                            span(class=ingredient.className)= ingredient.t
+                            span.sep= ', '

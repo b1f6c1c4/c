@@ -28,11 +28,11 @@ Plan:
 1. Develop a web interface
     - nodejs+expressjs+pug backend rendering
     - dockerized
-    - Upon `POST /updateKeys`:
+    - Upon `POST /api/updateKeys`:
         1. Iterate through ingredients on monday.com
         1. If `!Key && Genre === 'Unknown'`, translate `Name` into `Key`
         1. Report changes
-    - Upon `POST /classifyGenres?n=<n>`:
+    - Upon `POST /api/classifyGenres?n=<n>`:
         1. Iterate through `<n>` `Key && Genre === 'Unknown'` ingredients on monday.com
         1. Query recipe puppy API
             - If no recipe found, `Genre = 'Disabled'`

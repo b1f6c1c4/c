@@ -4,7 +4,7 @@
   "description": "c for cook",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "nodemon -e js,pug src/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/b1f6c1c4/c#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "got": "^11.8.1",
-    "json5": "^2.2.0"
+    "json5": "^2.2.0",
+    "nodemon": "^2.0.7",
+    "pug": "^3.0.0"
   }
 }

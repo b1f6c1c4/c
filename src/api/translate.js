@@ -14,7 +14,6 @@ const run = async (q, source, target) => {
     source,
     key: config.apiKey,
   }});
-  console.log(data);
   return data.translations[0].translatedText;
 };
 module.exports = {
