@@ -35,7 +35,7 @@ Plan:
     - Upon `POST /api/classifyGenres?n=<n>`:
         1. Iterate through `<n>` `Key && Genre === 'Unknown'` ingredients on monday.com
         1. Query recipe puppy API
-            - If no recipe found, `Genre = 'Disabled'`
+            - If no recipe found, skip
             - If any recipe found, `Genre = 'Main'`
         1. Report changes
     - Upon `GET /`:

@@ -43,4 +43,23 @@ app.post('/api/updateKeys', wrap(async (req, res) => {
   res.json(modified);
 }));
 
+app.post('/api/classifyGenres', wrap(async (req, res) => {
+  const items = await monday.find('tier', req.query.tier, { key: 1, genre: 1 });
+  const modified = [];
+  await Promise.all(items.map(async (item) => {
+    if (!item.key) return;
+    if (item.genre !== 'Unknown') return;
+    if (!await recipe.check(item.key)) {
+      item.genre = 'Disabled';
+      return;
+    }
+    item.genre = 'Main';
+    console.log(`${item.name} -> Main`);
+    modified.push(item);
+  }));
+  if (modified.length)
+    await monday.save(modified);
+  res.json(items);
+}));
+
 app.listen(3000);

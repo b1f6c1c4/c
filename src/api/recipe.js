@@ -17,4 +17,9 @@ module.exports = {
       ub = Math.ceil(p / 2);
     }
   },
+  check: async (keys) => {
+    const k = Array.isArray(keys) ? keys : [keys];
+    const { body } = await api({ searchParams: { i: k.join(',') } });
+    return body.results.length;
+  },
 };
