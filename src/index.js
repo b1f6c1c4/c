@@ -1,7 +1,7 @@
-const translate = require('./api/translate');
+const recipe = require('./api/recipe');
 
 const func = async () => {
-  console.log(await translate.zh2en('芹菜'));
+  console.log(await recipe.sample(['beef', 'lamb']));
 }
 
 func();
