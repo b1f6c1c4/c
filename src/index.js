@@ -41,6 +41,13 @@ const renaming = (ingr) => {
   const rt = {
     'pasta (in general)': 'pasta',
     'mozzarella cheese': 'mozzarella',
+    'garlic powder': 'garlic',
+    'lemon juice': 'lemon',
+    'lemon zest': 'lemon',
+    'parmesan': 'cheese',
+    'mayonaise': 'mayonnaise',
+    'hamburger bun': 'burger gun',
+    'ricotta cheese': 'cheese',
   };
   if (rt.hasOwnProperty(ingr)) return rt[ingr];
   return ingr;
@@ -52,9 +59,21 @@ app.get('/', wrap(async (req, res) => {
   const full = await monday.findAll();
   const lookup = {};
   full.forEach((item) => {
-    lookup[item.key + 's'] = item;
-    lookup[item.key] = item;
-    lookup[item.key.replace(/s$/, '')] = item;
+    const append = (k) => {
+      if (!lookup.hasOwnProperty(k))
+        lookup[k] = [];
+      lookup[k].push(item);
+    };
+    if (/s$/.test(item.key)) {
+      append(item.key.replace(/s$/, ''));
+      append(item.key);
+    } else {
+      append(item.key);
+      append(item.key + 's');
+    }
+  });
+  Object.keys(lookup).forEach((k) => {
+    lookup[k] = lookup[k].sort((a, b) => weightIngredient(b) - weightIngredient(a))[0];
   });
   const weightRecipe = ({ ingrs, found }) => {
     let v = ingrs.map((ingr) => lookup.hasOwnProperty(ingr)
@@ -75,7 +94,7 @@ app.get('/', wrap(async (req, res) => {
         continue;
       }
       rst.selected = true;
-      const rcp = await recipe.sample(rst.key);
+      const rcp = await recipe.sample(rst.key, req.query.q);
       if (!rcp) {
         console.error(`No recipe found for ${rst.name}/${rst.key}`);
         continue;
