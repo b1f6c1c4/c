@@ -1,42 +1,50 @@
-# c
+# c-for-cook
 
-> c for cook
+> 根据食材列表自动推荐菜谱
 
-Functions:
+- 食材来自 https://monday.com/ （需手工维护列表）
+- 菜谱来自 http://www.recipepuppy.com/
+- 每次刷新页面自动推荐8道正餐和2道方便菜品
+- 无任何广告，无任何JavaScript
+- 中英文对照，增加词汇量
 
-- filter based on ingredients
-- translate everything into/from Chinese
-- Web-based interface
+## Usage
 
-Plan:
+1. 创建`secret.json5`:
 
-1. Keep a list of ingredients available: monday.com/b1f6c1c4/b1pn/Foods
-    - Column `Name` in whatever language
-    - Column `Key` in English that is searchable in #2
-      - Generate automatically if missing, update manually if necessary
-    - Column `Genre` within `['Main', 'Individual', 'Disabled', 'Unknown']`
-    - Column `Tier` within `['First', 'Second', 'Third', 'Unknown']`
-    - Access via API in GraphQL
-        - https://monday.com/developers/v2
-        - Huge limit, no worries
-1. Understand Google Translate API
-    - https://cloud.google.com/translate/pricing
-    - First 500,000 characters free monthly
-1. Understand Recipe Puppy API
-    - http://www.recipepuppy.com/about/api/
-    - 1000 daily
-1. Develop a web interface
-    - nodejs+expressjs+pug backend rendering
-    - dockerized
-    - Upon `POST /api/updateKeys`:
-        1. Iterate through ingredients on monday.com
-        1. If `!Key && Genre === 'Unknown'`, translate `Name` into `Key`
-        1. Report changes
-    - Upon `POST /api/classifyGenres?n=<n>`:
-        1. Iterate through `<n>` `Key && Genre === 'Unknown'` ingredients on monday.com
-        1. Query recipe puppy API
-            - If no recipe found, skip
-            - If any recipe found, `Genre = 'Main'`
-        1. Report changes
-    - Upon `GET /`:
-         TODO
+    ```json5
+    {
+      monday: {
+        apiKey: "...", // 左下角头像->Admin->API
+        bId: ..., // 打开对应的board，从URL中可以直接找到
+        cIds: { // 见下方说明
+          key: '...',
+          category: '...',
+          location: '...',
+          expire: '...',
+          quantity: '...',
+          genre: '...',
+          tier: '...',
+        },
+      },
+      translate: { // Google Translate API
+        apiKey: "...",
+      },
+    }
+    ```
+
+    关于`cIds`：在 https://monday.com/developers/v2/try-it-yourself 执行以下查询：
+    ```
+    {
+        boards(ids: ...) { // 填入bId
+            columns {
+                id
+                title
+            }
+        }
+    }
+    ```
+
+1. 执行`npm install`
+1. 执行`npm start`
+1. 访问`http://localhost:3000`
