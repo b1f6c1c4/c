@@ -44,6 +44,12 @@ const renaming = (ingr) => {
     'mayonaise': 'mayonnaise',
     'hamburger bun': 'burger gun',
     'ricotta cheese': 'cheese',
+    'sharp cheese': 'cheese',
+    'parmesan cheese': 'cheese',
+    'cottage cheese': 'cheese',
+    'lasagna noodle': 'lasagna',
+    'lowfat milk': 'milk',
+    'english muffin': 'muffin',
   };
   if (rt.hasOwnProperty(ingr)) return rt[ingr];
   return ingr;
