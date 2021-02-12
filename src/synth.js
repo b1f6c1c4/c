@@ -187,7 +187,7 @@ class Synth {
                 return l ? {
                   o: ingr,
                   t: l.name,
-                  className: `tier-${l.tier.toLowerCase()}`,
+                  className: `tier tier-${l.tier.toLowerCase()}`,
                 } : {
                   o: ingr,
                   t: await translate.en2zh(ingr),

@@ -1,43 +1,135 @@
 doctype html
 html
     head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
         title c for cook
-    style
-        | h2 { margin-top: 0px; text-decoration: underline; }
-        | h2.trans { font-size: 18px; }
-        | a { color: black; }
-        | .trans { margin-top: -15px; }
-        | .item { display: flex; }
-        | .item-img { width: 110px; margin-right: 20px; }
-        | .sep { color: #aaa; }
-        | .tier-first { color: #fe158a; }
-        | .tier-second { color: #ff7575; }
-        | .tier-third { color: #fdab3d; }
-        | .tier-fourth { color: #cbb641; }
-        | .tier-fifth { color: #7f5348; }
-        | .unknown { color: #0ff; text-decoration: underline; }
+        style.
+            * {
+                font-family: sans-serif;
+            }
+            html, body {
+                background-color: #fefefe;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                line-height: 1.15;
+            }
+            #list {
+                width: calc(min(50%, 550px));
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-right: 1px solid #ddd;
+                overflow-y: scroll;
+            }
+            #list::-webkit-scrollbar {
+              display: none;
+            }
+            #list {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+            #main {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                flex: 1;
+                height: 100%;
+            }
+            iframe {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+            }
+            h2 {
+                margin: 0;
+                padding: 0;
+                color: #222;
+                font-size: 1.2em;
+                font-weight: bold;
+                word-spacing: normal;
+                letter-spacing: normal;
+            }
+            h2.trans {
+                color: #999;
+                font-size: 0.93em;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+            .item {
+                padding: 1em 0.7em;
+                border-bottom: 1px solid #ddd;
+                display: flex;
+            }
+            a:visited h2, a:visited .ingrs {
+                color: #7d6325;
+            }
+            .item:focus {
+                background-color: #eee;
+            }
+            .item-img {
+                width: 64px;
+                padding-right: 0.5em;
+                text-align: center;
+                flex-shrink: 0;
+            }
+            .stars {
+                word-break: break-all;
+                font-size: 0.94em;
+            }
+            .item-img img {
+                width: 80%;
+                border-radius: 3px;
+            }
+            .ingrs {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0.4em 0;
+            }
+            .sep { color: #aaa; }
+            h2 { text-decoration: underline; }
+            .tier-first { color: #fe158a; }
+            .tier-second { color: #ff7575; }
+            .tier-third { color: #fdab3d; }
+            .tier-fourth { color: #cbb641; }
+            .tier-fifth { color: #7f5348; }
+            .unknown { color: #5c8; text-decoration: underline; }
+            @media (hover) {
+                .item:not(:hover) .tier { color: inherit; }
+                .item:not(:hover) h2 { text-decoration: inherit; }
+                .item:not(:hover) .unknown { color: #777; }
+            }
     body
-        h1 c for cook - by b1f6c1c4
-        each item in recipes
-            div.item
-                div.item-img
-                    p
-                        - var i = 0;
-                        while i++ < item.w / 200
-                            span ★
-                    details
-                        summary Picture
+        #list
+            each item in recipes
+                a(href=item.href target="main" tabindex="0").item
+                    .item-img
                         img(src=item.thumbnail)
-                div
-                    h2
-                        a(href=item.href)= item.title.o
-                    h2.trans
-                        a(href=item.href)= item.title.t
-                    p
-                        each ingredient in item.ingredients
-                            span(class=ingredient.className)= ingredient.o
-                            span.sep= ', '
-                    p.trans
-                        each ingredient in item.ingredients
-                            span(class=ingredient.className)= ingredient.t
-                            span.sep= ', '
+                        p.stars
+                            - var i = 0;
+                            while i < item.w / 200
+                                if(200 * i++ + 100 < item.w)
+                                    span ★
+                                else
+                                    span ☆
+                    div
+                        h2.trans= item.title.t
+                        h2= item.title.o
+                        .ingrs
+                            each ingredient in item.ingredients
+                                span(class=ingredient.className)
+                                    span= ingredient.t
+                                    span /
+                                    span= ingredient.o
+                                span.sep= ', '
+        #main
+            iframe(name="main")
