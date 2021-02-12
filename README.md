@@ -10,6 +10,8 @@
 
 ## Usage
 
+Note: You may want to leverage the [pre-built docker image](https://hub.docker.com/r/b1f6c1c4/c-for-cook)
+
 1. 创建`secret.json5`:
 
     ```json5
@@ -45,6 +47,7 @@
     }
     ```
 
-1. 执行`npm install`
+1. 执行`npm i -g nodemon`
+1. 执行`npm i`
 1. 执行`npm start`
 1. 访问`http://localhost:3000`

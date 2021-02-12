@@ -1,0 +1,25 @@
+version: "2.3"
+services:
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - /data/c/certs:/opt/c/certs
+    networks:
+      - prod
+
+  server:
+    build: ./
+    image: b1f6c1c4/c-for-cook
+    restart: always
+    volumes:
+      - /data/c/work:/opt/c/work
+    networks:
+      - prod
+
+networks:
+  prod:
+    driver: bridge
