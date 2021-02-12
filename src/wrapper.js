@@ -1,12 +1,13 @@
 const pug = require('pug');
 const fs = require('fs');
+const path = require('path');
 const { encode } = require('html-entities');
 const Synth = require('./synth');
 
 const files = Promise.all([
-  fs.promises.readFile('views/prolog.html', 'utf-8'),
-  fs.promises.readFile('views/index.pug', 'utf-8').then((p) => pug.compile(p)),
-  fs.promises.readFile('views/epilog.html', 'utf-8'),
+  fs.promises.readFile(path.join(__dirname, '../views/prolog.html'), 'utf-8'),
+  fs.promises.readFile(path.join(__dirname, '../views/index.pug'), 'utf-8').then((p) => pug.compile(p)),
+  fs.promises.readFile(path.join(__dirname, '../views/epilog.html'), 'utf-8'),
 ]);
 
 const synth = async (req, res) => {
