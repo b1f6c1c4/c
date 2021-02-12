@@ -2,12 +2,12 @@ const express = require('express');
 const monday = require('./api/monday');
 const recipe = require('./api/recipe');
 const translate = require('./api/translate');
-const gcp = require('./gcp');
+const wrapper = require('./wrapper');
 
 const app = express();
 const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
-app.get('/', gcp.synth);
+app.get('/', wrapper.synth);
 
 app.post('/api/updateKeys', wrap(async (req, res) => {
   const items = await monday.find('genre', 'Unknown', { key: 1 }, +req.query.n);

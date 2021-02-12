@@ -1,8 +1,0 @@
-.gcloudignore
-.git
-.gitignore
-node_modules/
-LICENSE
-README.md
-src/index.js
-tools/
