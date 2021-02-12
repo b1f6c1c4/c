@@ -144,11 +144,13 @@ class Synth {
       2,
       async (rst) => {
         if (this.recipes.length >= this.maxRecipes) return 'full';
-        this.recipes.push({
+        const item = {
           w: weightIngredient(rst),
           title: { o: rst.key, t: rst.name },
           ingredients: [],
-        });
+        };
+        this.recipes.push(item);
+        if (this.cb) this.cb(item);
       },
     );
   }
@@ -202,12 +204,14 @@ class Synth {
               }),
             ]);
             if (this.recipes.length >= this.maxRecipes) return 'full';
-            this.recipes.push({
+            const item = {
               w: this.weightRecipe(rcrst),
               ...rcrst,
               title: { o: rcrst.title, t: titleT },
               ingredients,
-            });
+            };
+            this.recipes.push(item);
+            if (this.cb) this.cb(item);
             return 'success';
           },
         );
@@ -215,8 +219,8 @@ class Synth {
     );
   }
 
-  async draw(n = 10) {
-    this.maxRecipes = n;
+  async draw(cb) {
+    this.cb = cb;
     await this.loader;
     await Promise.all([this.drawIndividuals(), this.drawMains()]);
     this.recipes.sort(({w: a}, {w: b}) => b - a);

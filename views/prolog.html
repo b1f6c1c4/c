@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>c for cook</title>
+    <style>
+      * {
+          font-family: sans-serif;
+      }
+      html, body {
+          background-color: #fefefe;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          display: flex;
+          width: 100%;
+          height: 100%;
+          line-height: 1.15;
+      }
+      #list {
+          width: calc(min(50%, 550px));
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          border-right: 1px solid #ddd;
+          overflow-y: scroll;
+      }
+      #list::-webkit-scrollbar {
+        display: none;
+      }
+      #list {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      #main {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          flex: 1;
+          height: 100%;
+      }
+      iframe {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: 0;
+      }
+      h2 {
+          margin: 0;
+          padding: 0;
+          color: #222;
+          font-size: 1.2em;
+          font-weight: bold;
+          word-spacing: normal;
+          letter-spacing: normal;
+      }
+      h2.trans {
+          color: #999;
+          font-size: 0.93em;
+      }
+      a {
+          text-decoration: none;
+          color: inherit;
+      }
+      .item {
+          padding: 1em 0.7em;
+          border-bottom: 1px solid #ddd;
+          display: flex;
+      }
+      a:visited h2, a:visited .ingrs {
+          color: #7d6325;
+      }
+      .item:focus {
+          background-color: #eee;
+      }
+      .item-img {
+          width: 64px;
+          padding-right: 0.5em;
+          text-align: center;
+          flex-shrink: 0;
+      }
+      .stars {
+          word-break: break-all;
+          font-size: 0.94em;
+      }
+      .item-img img {
+          width: 80%;
+          border-radius: 3px;
+      }
+      .ingrs {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 0.4em 0;
+      }
+      .sep { color: #aaa; }
+      h2 { text-decoration: underline; }
+      .tier-first { color: #fe158a; }
+      .tier-second { color: #ff7575; }
+      .tier-third { color: #fdab3d; }
+      .tier-fourth { color: #cbb641; }
+      .tier-fifth { color: #7f5348; }
+      .unknown { color: #5c8; text-decoration: underline; }
+      @media (hover) {
+          .item:not(:hover) .tier { color: inherit; }
+          .item:not(:hover) h2 { text-decoration: inherit; }
+          .item:not(:hover) .unknown { color: #777; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="list">

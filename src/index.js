@@ -2,18 +2,12 @@ const express = require('express');
 const monday = require('./api/monday');
 const recipe = require('./api/recipe');
 const translate = require('./api/translate');
-const Synth = require('./synth');
+const gcp = require('./gcp');
 
 const app = express();
 const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
-app.set('views', './views');
-app.set('view engine', 'pug');
-app.get('/', wrap(async (req, res) => {
-  const synth = new Synth(req.query.s ? +req.query.s : undefined, req.query.q);
-  const recipes = await synth.draw(10);
-  res.render('index', { recipes });
-}));
+app.get('/', gcp.synth);
 
 app.post('/api/updateKeys', wrap(async (req, res) => {
   const items = await monday.find('genre', 'Unknown', { key: 1 }, +req.query.n);
