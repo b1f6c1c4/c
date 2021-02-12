@@ -7,14 +7,19 @@ const api = got.extend({
   responseType: 'json',
 });
 const run = async (q, source, target) => {
-  const { body: { data } } = await api({ searchParams: {
-    q,
-    target,
-    format: 'text',
-    source,
-    key: config.apiKey,
-  }});
-  return data.translations[0].translatedText;
+  try {
+    const { body: { data } } = await api({ searchParams: {
+      q,
+      target,
+      format: 'text',
+      source,
+      key: config.apiKey,
+    }});
+    return data.translations[0].translatedText;
+  } catch (e) {
+    console.error('Error during translation:', e);
+    return 'Translation server error';
+  }
 };
 module.exports = {
   zh2en: async (q) => run(q, 'zh-CN', 'en'),

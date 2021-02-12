@@ -86,7 +86,7 @@ class Synth {
       ? weightIngredient(this.lookup[ingr]) : 0).reduce((a, b) => a + b);
     v /= found;
     v /= Math.pow(ingrs.length, 0.05);
-    v += found / ingrs.length * 300;
+    v *= (found + 2) / (ingrs.length + 2);
     v += 1;
     return v;
   }
