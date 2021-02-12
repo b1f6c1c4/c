@@ -13,10 +13,15 @@ const synth = async (req, res) => {
   const [prolog, pugIndex, epilog] = await files;
   res.status(200);
   res.write(prolog);
+  let flag = true;
   try {
     const synth = new Synth(req.query.s ? +req.query.s : undefined, req.query.q);
     await synth.draw((item) => {
       console.log('Writting item:', item.title);
+      if (flag) {
+        res.write('<style>.loading-prompt { display: none; }</style>');
+        flag = false;
+      }
       res.write(pugIndex({ item }));
     });
   } catch (e) {
