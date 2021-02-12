@@ -1,5 +1,6 @@
 const pug = require('pug');
 const fs = require('fs');
+const { encode } = require('html-entities');
 const Synth = require('./synth');
 
 const files = Promise.all([
@@ -9,22 +10,25 @@ const files = Promise.all([
 ]);
 
 const synth = async (req, res) => {
-  res.status(200);
   const [prolog, pugIndex, epilog] = await files;
+  res.status(200);
   res.write(prolog);
-  const synth = new Synth(req.query.s ? +req.query.s : undefined, req.query.q);
-  await synth.draw((item) => {
-    console.log('Writting item:', item.title);
-    res.write(pugIndex({ item }));
-  });
+  try {
+    const synth = new Synth(req.query.s ? +req.query.s : undefined, req.query.q);
+    await synth.draw((item) => {
+      console.log('Writting item:', item.title);
+      res.write(pugIndex({ item }));
+    });
+  } catch (e) {
+    console.error('Error running synth:', e);
+    res.write('<pre>' + encode(e) + '</pre>');
+  }
   res.write(epilog);
   res.end();
 };
 
 module.exports.synth = (req, res) => {
-  synth(req, res).then((recipes) => {
-    res.status(200).send(pug.renderFile('views/index.pug', { recipes }));
-  }).catch((e) => {
+  synth(req, res).catch((e) => {
     res.status(500).send(e);
   });
 };
