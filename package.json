@@ -2,7 +2,7 @@
   "name": "c",
   "version": "0.0.0",
   "description": "c for cook",
-  "main": "src/index.js",
+  "main": "src/gcp.js",
   "scripts": {
     "start": "nodemon -e js,json5,pug src/index.js"
   },
