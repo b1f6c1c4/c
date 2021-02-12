@@ -56,7 +56,11 @@ class Synth {
   maxRecipes = 10;
 
   constructor(seed, q) {
-    this.chance = new Chance(seed);
+    console.log('seed=', seed);
+    if (seed)
+      this.chance = new Chance(seed);
+    else
+      this.chance = new Chance();
     this.q = q ? q : '';
     this.loader = monday.findAll().then((full) => {
       this.full = full;
