@@ -1,4 +1,4 @@
-a(href=item.href target="main" tabindex="0").item
+a(href=item.href.replace(/^https?:/, '') target="main" tabindex="0").item
     .item-img
         img(src=item.thumbnail)
         p.stars

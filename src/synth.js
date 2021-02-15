@@ -11,8 +11,8 @@ const weightIngredient = ({ expire, quantity, genre, tier }) => {
     'Unknown': 0,
   };
   const tierWeights = {
-    'First': 1000,
-    'Second': 800,
+    'First': 2000,
+    'Second': 1500,
     'Third': 600,
     'Fourth': 200,
     'Fifth': 50,
@@ -49,7 +49,10 @@ const renaming = (ingr) => {
     'cottage cheese': 'cheese',
     'lasagna noodle': 'lasagna',
     'lowfat milk': 'milk',
+    'skim milk': 'milk',
     'english muffin': 'muffin',
+    'spanish paprika': 'paprika',
+    'cheese spread': 'paprika',
   };
   if (rt.hasOwnProperty(ingr)) return rt[ingr];
   return ingr;
@@ -59,7 +62,7 @@ class Synth {
   lookup = {};
   full = undefined;
   recipes = [];
-  maxRecipes = 10;
+  maxRecipes = 12;
 
   constructor(seed, q) {
     console.log('seed=', seed);
@@ -159,7 +162,7 @@ class Synth {
     await this.aDraw(
       this.full.filter((item) => item.genre === 'Main'),
       weightIngredient,
-      8,
+      10,
       async (rst) => {
         if (this.recipes.length >= this.maxRecipes) return 'full';
         const rcp = await recipe.sample(rst.key, this.q, this.chance);
@@ -170,7 +173,7 @@ class Synth {
         const rcpGoods = rcp.filter((rc) => {
           const ingrs = rc.ingredients.split(', ').map(renaming);
           const found = ingrs.filter((ingr) => this.lookup.hasOwnProperty(ingr)).length;
-          if (found < ingrs.length / 2 && ingrs.length >= 4)
+          if (found < ingrs.length * 0.8)
             return false;
           rc.ingrs = ingrs;
           rc.found = found;
